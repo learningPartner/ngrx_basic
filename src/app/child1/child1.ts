@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { CommonService } from '../common-service';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Istore } from '../store.modal';
 import { onIncrementCounter } from '../store/counter.action';
+import { selectLoading, selectLocationArray } from '../store/location.selector';
 
 @Component({
   imports: [],
@@ -16,13 +17,37 @@ export class Child1 {
 
   store = inject(Store<Istore>)
 
+  constructor() {
+     this.getLocationLoadingFalg();
+  }
 
   onIncrement() { 
+   
     debugger;
     this.store.dispatch(onIncrementCounter());
     // this.commonSrv.counterState++;
     // this.commonSrv.counter$.next(this.commonSrv.counterState);
 
 
+  }
+
+  getLocations() {
+    this.store.pipe(
+      select(selectLocationArray)
+    ).subscribe({
+      next:(res:any) =>{
+        debugger;
+      }
+    })
+  }
+
+  getLocationLoadingFalg() {
+    this.store.pipe(
+      select(selectLoading)
+    ).subscribe({
+      next:(loading:boolean) =>{
+        debugger;
+      }
+    })
   }
 }

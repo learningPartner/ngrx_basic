@@ -5,6 +5,7 @@ import { Child1 } from './child1/child1';
 import { CommonService } from './common-service';
 import { select, Store } from '@ngrx/store';
 import {Istore} from './store.modal'
+import { onLoadLocations } from './store/location.action';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +29,7 @@ export class App {
         this.counter =  count;
       }
     })
+    this.store.dispatch(onLoadLocations())
 
     this.commonService.counter$.subscribe({
       next:(res:number)=>{
